@@ -1,4 +1,5 @@
 
+
 ## INTRODUCTION 🔋
 
 Power outages in the United States are a prime example of a common occurance that has a lots of *slight* variation over a population. For example, it is commonly believed that power outages vary in intensity and duration due to:
@@ -44,6 +45,7 @@ With these data in mind, we believe an interesting question that naturally arise
 > #### Every state has power outages from time to time, but which states' outages appear to be unusually long?
 
 <br />
+<br />
 
 The key word here is "unusually." Sure, an outage may be long from time to time, but when is that length *statistically significant* or *unusual*? We find that addressing such a question has room for comparison to multiple variables and drawing unique parallels. Eventually, we might be able to reason or speculate as to *why* our offender states end up having these longer outages.
 
@@ -52,40 +54,7 @@ The key word here is "unusually." Sure, an outage may be long from time to time,
 ² Descriptions of data columns courtesy of persons involved in [this paper.](https://www.sciencedirect.com/science/article/pii/S2352340918307182)
 
 ---
-
-But just because every outage is different, it doesn't mean we can't find common threads or patterns that tell us ==valuable information== about such a trend.
-
-
-Thanks to **Purdue University's LASCI (Laboratory For Advancing Sustainable Critical Infrastructure)**,[^1] we have access to ==1534 rows== of power outage data that contain valuable column information[^2] like:
-
-<br />
-<br />
-
-- **OUTAGE.DURATION**
->"Duration of outage event (in minutes)." This is one of the most stark characteristics of a power outage.
-
-
-- **POSTAL.CODE**
->"Represents the postal code of the U.S. states." Useful as an abbreviation or indicator for individual states.
-
-- **CUSTOMERS.AFFECTED**
->"Number of customers affected by the power outage event." Gives perspective on size or magnitude of the outage.
-
-\
-\
-\
-With these data in mind, we believe an interesting question that naturally arises is:
-
-> #### Every state has power outages from time to time, but which states' outages appear to be unusually long?
-
-The key word here is "unusually." Sure, an outage may be long from time to time, but when is that length *statistically significant* or *unusual*? We find that addressing such a question has room for comparison to multiple variables and drawing unique parallels. Eventually, we might be able to reason or speculate as to *why* our offender states end up having these longer outages.
-
-[1^] Link to data source found [here.](https://engineering.purdue.edu/LASCI/research-data/outages/outagerisks)
-
-[2^] Descriptions of data columns courtesy of persons involved in [this paper.](https://www.sciencedirect.com/science/article/pii/S2352340918307182)
-
-
-## CLEANING AND EDA 🔋
+## CLEANING AND E.D.A. (EXPLORATORY DATA ANALYSIS)🔋
 
 We started our cleaning off by converting the default excel data file to a CSV file so that we could access and visualize the data through Python Pandas, and after some slight reformatting we had a properly-indexed DataFrame to work with.
 
@@ -108,6 +77,8 @@ These steps made our analysis a lot easier to work with, and a lot more "date-ce
 
 [CLEANDF]
 
+<br />
+
 ---
 ### UNIVARIATE ANALYSIS
 
@@ -120,6 +91,8 @@ Perhaps there was a causal explanation for the distribution here, but we couldn'
 [CHOROCUSTOMERS]
 
 And sure enough, it seemed as though similar regions (such as New York or California) were decently dense with dissatisfied customers. Now it was time to compare them against each other.
+
+<br />
 
 ---
 ### BIVARIATE ANALYSIS
@@ -136,11 +109,11 @@ However, when we stratified our data by state and **plotted the means per state 
 
 [MEANSCATTER]
 
-Now there was a *much* more clear positive linear trend instead of a negative one from our previous plot. Why was this the case? We can chalk a lot of it up to **Simpson's Paradox: where data on the individual level tells a different story on a grouped level.**
+Now there was a *much* more clear positive linear trend. Why do these two plots show opposite conclusions? We can chalk a lot of it up to **Simpson's Paradox: where data on the individual level tells a different story on a grouped level.**
 
-On the individual level, outages that affected more and more people take less time to correct; speculating, this may have something to do with more widespread outages getting greater **sense of urgency and attention** in their correction.
+On the individual level, outages that affect more and more people take less time to correct; speculating, this may have something to do with more widespread outages getting greater **sense of urgency and attention** in their correction.
 
-On the state level, outages that affected more and more people take much longer to correct; this could be due to the fact that on the whole more populous states have more **complex power grids and systems** that take professionals longer to diagnose the problem due to difficulty.
+On the state level, outages that affect more and more people take much longer to correct; this could be due to the fact that on the whole more populous states have more **complex power grids and systems** that take professionals significantly longer to diagnose the problem.
 
 <br />
 
@@ -155,12 +128,54 @@ It's pretty massive, but here's the table:
 
 One interesting thing you'll notice is that "severe weather" is the most common cause of outages *by far.* It is the only column in this table that where **more than one state has a number of outages in the double digits.**
 
-A second thing worth note is that there are a lot of zeroes. This indicates that **not all states frequently experience all causes for specific outages.** In other words, certain states are more predisposed to certain susceptibilities than others, which lines up with most peoples anecdotal knowledge of certain cities or states being worse for power outages.
+A second thing worth note is that there are a lot of zeroes. This indicates that **not all states frequently experience all causes for specific outages.** In other words, certain states are more predisposed to certain susceptibilities than others, which lines up with most peoples' anecdotal knowledge of certain cities or states being worse for power outages.
 
+---
 
 
 ## ASSESSMENT OF MISSINGNESS 🔋
-c
+
+Data can be absent from a dataset for many reasons. Sometimes it's intentional, other times it's not. Typically, it is good to assess the type of missingness in a dataset before taking your next steps.
+
+### NMAR ANALYSIS
+
+NMAR (or not Not Missing At Random) is a type of missingness characterized by data in a column being missing because of the value of the missing data itself. 
+
+For example: If you get a bunch of missing values after administering a self-reported survey with the sole question "Rate your happiness on a scale of 1 to 10", it's probably the twos and threes that are missing from your dataset, because less happy individuals are more inclined to be embarassed to report anything at all. Since the data that's missing is dependent on if that number is low, the missingness in the data here is NMAR.
+
+In our power outage data, we could consider missing values in the CAUSE.CATEGORY.DETAIL column as NMAR. The purpose of CAUSE.CATEGORY.DETAIL is to supply extra information about the cause of an outage if necessary. It's likely the case that information was left missing from the column if that extra information was not considered relevant or necessary. Though we cannot know for sure if that is the exact criteria for whether or not missing values were left unattended, the fact that such a practice is likely tells us that this data is NMAR. 
+
+The missingness of the CAUSE.CATEGORY.DETAIL column is dependent on whether or not the extra description is relevant and necessary. 
+
+<br/>
+
+---
+### MISSINGNESS DEPENDENCY
+
+Our last comparison of CUSTOMERS.AFFECTED and OUTAGE.DURATION was only made possible by dropping rows with missing values from the dataset, but how do we know that dropping those values didn't significantly impact our conclusion? Moreover, if we were to fill in (or impute) these missing values, how would we know *that* wouldn't significantly impact our conclusion?
+
+**We need to assess whether or not data in our CUSTOMERS.AFFECTED column is MAR (Missing at Random) or MCAR (Missing Completely At Random) with respect to OUTAGE.DURATION.**
+
+- If our data winds up MCAR, we can be more liberal with how we tackle the data, because "Missing Completely At Random" means tweaking data at random **won't significantly change our distribution of OUTAGE.DURATION data.**
+
+- If our data winds up MAR, we have to be more careful with how we tackle the data, because "Missing At Random" means tweaking data at random ***might* significantly change our distribution of OUTAGE.DURATION data.**
+
+Here's a diagram of two distributions, one of OUTAGE.DURATION but only when CUSTOMERS.AFFECTED **has missing data**, and another of OUTAGE.DURATION but only when CUSTOMERS.AFFECTED **has present data**:
+
+[DIST1]
+[DIST2]
+
+<br>
+All things considered, the distributions have roughly the same shape; both of them are **right-skewed and *lot* of data is packed into that first bar.** This implies that our OUTAGE.DURATION data is of the same distribution regardless of whether or not CUSTOMERS.AFFECTED is absent, meaning **our data is probably MCAR.** But looks can be deceiving, so we more formally decided to run a permutation test and see what results lie waiting.
+
+<br>
+[PERMTEST]
+
+Surprisingly, the p-value we recieved from running this test was ~0.02, which (at a standard α = 0.05 significance level) **implies significant difference in the missing and non-missing distributions, or MAR dependence.**
+
+It's a good thing we checked! It turns out we need to be more careful with our data.
+
+
 
 ## HYPOTHESIS TESTING 🔋
 d
