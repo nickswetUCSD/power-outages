@@ -1,9 +1,3 @@
----
-layout: page
-title: Power Outages
-description: :)
-nav_exclude: true
----
 
 ## INTRODUCTION 🔋
 
