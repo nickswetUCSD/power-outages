@@ -178,4 +178,18 @@ It's a good thing we checked! It turns out we need to be more careful with our d
 
 
 ## HYPOTHESIS TESTING 🔋
-d
+
+In our hypothesis test, we investigated whether each of the fifty states had longer power outages (duration) compared to the average power outage duration of the greater United States. We defined long power outages as power outages that were greater than the national average duration. Thus, in order to simulate our null hypothesis, we created a boolean column of True’s for longer than the average duration and False for not longer than the average duration for each observation. Thus, our hypotheses were as follows:
+Null Hypothesis: The state’s proportion of long power outages is equal to proportion of long power outages of the greater United States
+Alternative Hypothesis: the state’s proportion of of long power outages is greater than the proportion of long power outages of the greater United States
+Test Statistic: the proportion of long power outages 
+Significance Level: 0.05
+
+These choices of hypothesis fit our overall question wherein we are trying to determine which states have more longer than average power outages. With this test, we hope to perhaps find regional patterns of where long power outages may occur. 
+ 
+P-Value: Since we conducted the hypothesis test for each state, we have 50 p-values: one for each state indicating the probability of seeing such an observed proportion of long power outages if the null hypothesis was indeed true. We have stored our p-values in the following DataFrame:
+
+
+Looking at each p-value, we can fail to reject the null hypothesis for a majority of the states (46 total states) as they all have p-values greater than 0.05. However, for 4 states, we can reject the null hypothesis at the 5% significance level and conclude that Pennsylvania, Michigan, New York, and New Jersey do not have a proportion of long power outages equal to the greater United States. It’s interesting to note that all of these states are located in the Northeast and Midwest (for Michigan), perhaps suggesting there are regional factors at play impacting power outage duration. Moreover, it is also interesting to note that Wisconsin did not appear on this list despite having the greatest mean power outage duration overall. 
+However, it is important to note that with such multiple testing without corrections, there is an increased risk of committing a Type 1 error wherein we reject the null hypothesis when it is actually true. 
+
