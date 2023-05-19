@@ -480,7 +480,6 @@ We started thinking more about the causes behind these outages and *why* they we
 
 It's pretty massive, but here's the table:
 
-<div style="overflow-y:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1007,7 +1006,7 @@ It's pretty massive, but here's the table:
     </tr>
   </tbody>
 </table>
-</div>
+
 
 One interesting thing you'll notice is that "severe weather" is the most common cause of outages *by far.* It is the only column in this table that where **more than one state has a number of outages in the double digits.**
 
@@ -1063,6 +1062,8 @@ All things considered, the distributions have roughly the same shape; both of th
 
 - *Test statistic: the absolute mean difference in OUTAGE.DURATION⏱ for rows in which CUSTOMERS.AFFECTED🚶 was missing and rows in which CUSTOMERS.AFFECTED🚶 is not missing.*
 
+- *Significance Level: 0.05*
+
 Surprisingly, the p-value we recieved from running this test was ~0.02, which (at a standard α = 0.05 significance level) **rejects the null hypothesis and implies significant difference in the missing and non-missing distributions, or MAR dependence.**
 
 It's a good thing we checked! It turns out we need to be more careful with our data.
@@ -1079,6 +1080,8 @@ In conjunction with data from OUTAGE.DURATION⏱, we conducted a permutation tes
 - <b>Alternative Hypothesis: </b>The missingness of CAUSE.CATEGORY.DETAIL🌪️ **does depend** on OUTAGE.DURATION⏱.
 
 - *Test statistic: the absolute mean difference in OUTAGE.DURATION⏱ for rows in which CAUSE.CATEGORY.DETAIL🌪️ was missing and rows in which CAUSE.CATEGORY.DETAIL🌪️ is not missing.*
+
+- *Significance Level: 0.05*
 
 We recieved a p-value of ~0.08 for this comparison, which (at a standard α = 0.05 significance level) **fails to reject the null hypothesis and implies that CAUSE.CATEGORY.DETAIL🌪️ is not dependent on OUTAGE.DURATION⏱. In other words, CAUSE.CATEGORY.DETAIL is MCAR with respect to OUTAGE.DURATION⏱.** 
 
@@ -1102,11 +1105,12 @@ Our hypotheses for each of the 49 tests (Alaska had no data) were as follows:
 
 - *Test Statistic: the proportion of long power outages* 
 
+- *Significance Level: 0.05*
+
 These choices of hypothesis fit our overall question wherein we are trying to determine which states **more commonly have longer-than-average power outages.** With this test, we hoped to find regional patterns of where long power outages may occur (perhaps even coinciding with our choropleth of average CUSTOMERS.AFFECTED🚶 per state from earlier on).
  
-Since we conducted the hypothesis test for each state, we have 50 p-values: one for each state indicating the probability of seeing such an observed proportion of long power outages if the null hypothesis was indeed true. <b>We have stored our p-values in the following DataFrame:</b>
+Since we conducted the hypothesis test for each state, we have 49 p-values: one for each state indicating the probability of seeing such an observed proportion of long power outages if the null hypothesis was indeed true. <b>We have stored our p-values in the following DataFrame:</b>
 
-<div style="overflow-y:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1463,7 +1467,7 @@ Since we conducted the hypothesis test for each state, we have 50 p-values: one 
     </tr>
   </tbody>
 </table>
-</div>
+
 
 Looking at each p-value, **we can fail to reject the null hypothesis for a majority of the states (46 total states) as they all have p-values greater than 0.05.**
 
@@ -1515,7 +1519,7 @@ It’s interesting to note that all of these states are located in the Northeast
 
 <iframe src="assets/chorocustomers.html" width=800 height=600 frameBorder=0></iframe>
 
-Moreover, it is also interesting to note that Wisconsin did not appear on this list despite having the greatest mean power outage duration overall. 
+Moreover, it is also interesting to note that Wisconsin did not appear on this list despite having the greatest mean power outage duration overall. This may be because while Wisconsin has the greatest mean outage duration, its proportion of long durations is actually on par with the proportion of long outages nationwide. However, Wisconsin’s long outages — when they do occur — may be longer compared to the other states.
 
 <b>It is also important to note that with such multiple testing without corrections, there is an increased risk of committing a Type 1 error wherein we reject the null hypothesis when it is actually true. </b>
 
