@@ -1,5 +1,5 @@
 title: ⚡POWER OUTAGES⚡
-description: "A PROJECT FOR COURSE DSC80: ANALYZING AND VISUALIZING A SATASET CONTAINING INFO ON POWER OUTAGES IN THE U.S."
+description: "A PROJECT FOR COURSE DSC80: ANALYZING AND VISUALIZING A DATASET CONTAINING INFO ON POWER OUTAGES IN THE U.S."
 remote_theme: pages-themes/midnight@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
