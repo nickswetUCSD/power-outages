@@ -53,7 +53,7 @@ The key word here is "unusually." Sure, an outage may be long from time to time,
 
 We started our cleaning off by converting the default excel data file to a CSV file so that we could access and visualize the data through Python Pandas, and after some slight reformatting we had a properly-indexed DataFrame to work with.
 
-<iframe src="assets/clean1.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/clean1.html" width=800 height=150 frameBorder=0></iframe>
 
 We proceeded by creating two new columns through merging old unnecessary ones:
 <br />
@@ -480,6 +480,7 @@ We started thinking more about the causes behind these outages and *why* they we
 
 It's pretty massive, but here's the table:
 
+<div style="overflow-y:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1006,6 +1007,7 @@ It's pretty massive, but here's the table:
     </tr>
   </tbody>
 </table>
+</div>
 
 One interesting thing you'll notice is that "severe weather" is the most common cause of outages *by far.* It is the only column in this table that where **more than one state has a number of outages in the double digits.**
 
@@ -1104,6 +1106,7 @@ These choices of hypothesis fit our overall question wherein we are trying to de
  
 Since we conducted the hypothesis test for each state, we have 50 p-values: one for each state indicating the probability of seeing such an observed proportion of long power outages if the null hypothesis was indeed true. <b>We have stored our p-values in the following DataFrame:</b>
 
+<div style="overflow-y:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1460,6 +1463,7 @@ Since we conducted the hypothesis test for each state, we have 50 p-values: one 
     </tr>
   </tbody>
 </table>
+</div>
 
 Looking at each p-value, **we can fail to reject the null hypothesis for a majority of the states (46 total states) as they all have p-values greater than 0.05.**
 
