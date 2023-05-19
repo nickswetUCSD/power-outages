@@ -64,10 +64,9 @@ We proceeded by creating two new columns through merging old unnecessary ones:
 - **OUTAGE.RESTORATION:**
 >Was the column merging of "OUTAGE.RESTORATION.DATE" and "OUTAGE.RESTORATION.TIME" into a single pd.Timestamp column.
 
-<iframe src="assets/clean2.html" width=800 height=600 frameBorder=0></iframe>
-
 These steps made our analysis a lot easier to work with, and a lot more "date-centric". We could focus more on OUTAGE.DURATION⏱ and the start and endpoints of our outages instead of getting confused among five different columns relating to time, so things naturally became more efficient. The resulting dataframe looked something like this.
 
+<div style="overflow-x:auto;">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -435,7 +434,7 @@ These steps made our analysis a lot easier to work with, and a lot more "date-ce
   </tbody>
 </table>
 <br />
-
+</div>
 ---
 ### UNIVARIATE ANALYSIS
 
