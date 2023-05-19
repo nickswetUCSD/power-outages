@@ -1,4 +1,3 @@
-POWER OUTAGES
 
 ## INTRODUCTION 🔋
 
@@ -200,8 +199,9 @@ In conjunction with data from OUTAGE.DURATION⏱, we conducted a permutation tes
 
 We recieved a p-value of ~0.08 for this comparison, which (at a standard α = 0.05 significance level) **fails to reject the null hypothesis and implies that CAUSE.CATEGORY.DETAIL🌪️ is not dependent on OUTAGE.DURATION⏱. In other words, CAUSE.CATEGORY.DETAIL is MCAR with respect to OUTAGE.DURATION⏱.** 
 
+<br>
 
-
+---
 
 ## HYPOTHESIS TESTING 🔋
 
