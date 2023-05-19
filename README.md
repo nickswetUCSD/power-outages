@@ -446,7 +446,9 @@ In this choropleth of mean outage duration, it seems Wisconsin has the greatest 
 
 Perhaps there was a causal explanation for the distribution here, but we couldn't say for certain. Regardless, it gave us an inkling that perhaps we should see **how CUSTOMERS.AFFECTED🚶 was spread geographically and see if there was similarity**, since more densely-populated areas tend to have more people that necessitate electricity as a utility.
 
+<div style="text-align:center"> 
 <iframe src="assets/chorocustomers.html" width=900 height=600 frameBorder=0></iframe>
+</div>
 
 In this choropleth of mean customers affected, it seems Florida has the greatest mean customers affected. This could be due to the greater population of these states.
 
@@ -1522,7 +1524,9 @@ Looking at each p-value, **we can fail to reject the null hypothesis for a major
 
 It’s interesting to note that all of these states are located in the Northeast and Midwest (for Michigan), perhaps suggesting there are regional factors at play impacting power outage duration. All of these are fairly high on our mean CUSTOMERS.AFFECTED🚶 plot, suggesting there is overlap in these two areas. 
 
+<div style="text-align:center"> 
 <iframe src="assets/chorocustomers.html" width=900 height=600 frameBorder=0></iframe>
+</div>
 
 Moreover, it is also interesting to note that Wisconsin did not appear on this list despite having the greatest mean power outage duration overall. This may be because while Wisconsin has the greatest mean outage duration, its proportion of long durations is actually on par with the proportion of long outages nationwide. However, Wisconsin’s long outages — when they do occur — may be longer compared to the other states.
 
