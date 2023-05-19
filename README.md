@@ -1,4 +1,4 @@
-
+POWER OUTAGES
 
 ## INTRODUCTION 🔋
 
@@ -23,15 +23,15 @@ Thanks to **Purdue University's LASCI (Laboratory For Advancing Sustainable Crit
 
 <br />
 
-- **OUTAGE.DURATION**:
+- **OUTAGE.DURATION** ⏱:
 >"Duration of outage event (in minutes)." This is one of the most stark characteristics of a power outage.
 <br />
 
-- **POSTAL.CODE**
->"Represents the postal code of the U.S. states." Useful as an abbreviation or indicator for individual states.
+- **CAUSE.CATEGORY.DETAIL**🌪️:
+>"Represents the postal code of the U.S. states." Interesting metric to track and aggregate.
 <br />
 
-- **CUSTOMERS.AFFECTED**
+- **CUSTOMERS.AFFECTED**🚶:
 >"Number of customers affected by the power outage event." Gives perspective on size or magnitude of the outage.
 
 <br />
@@ -39,10 +39,8 @@ Thanks to **Purdue University's LASCI (Laboratory For Advancing Sustainable Crit
 <br />
 With these data in mind, we believe an interesting question that naturally arises is:
 
-<br />
-<br />
 
-> #### Every state has power outages from time to time, but which states' outages appear to be unusually long?
+> ## Every state has power outages from time to time, but which states' outages appear to be unusually long?
 
 <br />
 <br />
@@ -73,7 +71,7 @@ We proceeded by creating two new columns through merging old unnecessary ones:
 
 [CLEAN2]
 
-These steps made our analysis a lot easier to work with, and a lot more "date-centric". We could focus more on OUTAGE.DURATION and the start and endpoints of our outages instead of getting confused among five different columns relating to time, so things naturally became more efficient. The resulting dataframe looked something like this.
+These steps made our analysis a lot easier to work with, and a lot more "date-centric". We could focus more on OUTAGE.DURATION⏱ and the start and endpoints of our outages instead of getting confused among five different columns relating to time, so things naturally became more efficient. The resulting dataframe looked something like this.
 
 [CLEANDF]
 
@@ -82,11 +80,11 @@ These steps made our analysis a lot easier to work with, and a lot more "date-ce
 ---
 ### UNIVARIATE ANALYSIS
 
-We used plotly.express.choropleth to get an idea of the **geographical distribution of our OUTAGE.DURATION data.** We mapped out the mean durations of power outages onto their respective states and noticed that **higher means were typically distributed among more populated/urbanized areas.**
+We used plotly.express.choropleth to get an idea of the **geographical distribution of our OUTAGE.DURATION⏱ data.** We mapped out the mean durations of power outages onto their respective states and noticed that **higher means were typically distributed among more populated/urbanized areas.**
 
 [CHORODURATION]
 
-Perhaps there was a causal explanation for the distribution here, but we couldn't say for certain. Regardless, it gave us an inkling that perhaps we should see **how CUSTOMERS.AFFECTED was spread geographically and see if there was similarity**, since more densely-populated areas tend to have more people that necessitate electricity as a utility.
+Perhaps there was a causal explanation for the distribution here, but we couldn't say for certain. Regardless, it gave us an inkling that perhaps we should see **how CUSTOMERS.AFFECTED🚶 was spread geographically and see if there was similarity**, since more densely-populated areas tend to have more people that necessitate electricity as a utility.
 
 [CHOROCUSTOMERS]
 
@@ -97,7 +95,7 @@ And sure enough, it seemed as though similar regions (such as New York or Califo
 ---
 ### BIVARIATE ANALYSIS
 
-To start, we took the raw data from CUSTOMERS.AFFECTED and plotted it against OUTAGE.DURATION as a scatterplot.
+To start, we took the raw data from CUSTOMERS.AFFECTED🚶 and plotted it against OUTAGE.DURATION⏱ as a scatterplot.
 
 [INDIVIDUALSCATTER]
 
@@ -143,53 +141,113 @@ NMAR (or not Not Missing At Random) is a type of missingness characterized by da
 
 For example: If you get a bunch of missing values after administering a self-reported survey with the sole question "Rate your happiness on a scale of 1 to 10", it's probably the twos and threes that are missing from your dataset, because less happy individuals are more inclined to be embarassed to report anything at all. Since the data that's missing is dependent on if that number is low, the missingness in the data here is NMAR.
 
-In our power outage data, we could consider missing values in the CAUSE.CATEGORY.DETAIL column as NMAR. The purpose of CAUSE.CATEGORY.DETAIL is to supply extra information about the cause of an outage if necessary. It's likely the case that information was left missing from the column if that extra information was not considered relevant or necessary. Though we cannot know for sure if that is the exact criteria for whether or not missing values were left unattended, the fact that such a practice is likely tells us that this data is NMAR. 
+In our power outage data, we could consider missing values in the CAUSE.CATEGORY.DETAIL🌪️ column as NMAR. The purpose of CAUSE.CATEGORY.DETAIL🌪️ is to supply extra information about the cause of an outage if necessary. It's likely the case that information was left missing from the column if that extra information was not considered relevant or necessary. 
 
-The missingness of the CAUSE.CATEGORY.DETAIL column is dependent on whether or not the extra description is relevant and necessary. 
+Though we cannot know for sure if that is the exact criteria for whether or not missing values were left unattended, the fact that such a practice is likely tells us that **this data can be interpreted as NMAR.**
+
+The missingness of the CAUSE.CATEGORY.DETAIL🌪️ column is dependent on whether or not the extra description is relevant and necessary.
+
+<b>Further ahead, we will conduct a permutation test to reveal that, additionally, CAUSE.CATEGORY.DETAIL🌪️ is MCAR (Missing Completely At Random) with respect to another column.</b>
 
 <br/>
 
 ---
 ### MISSINGNESS DEPENDENCY
 
-Our last comparison of CUSTOMERS.AFFECTED and OUTAGE.DURATION was only made possible by dropping rows with missing values from the dataset, but how do we know that dropping those values didn't significantly impact our conclusion? Moreover, if we were to fill in (or impute) these missing values, how would we know *that* wouldn't significantly impact our conclusion?
+Our last comparison of CUSTOMERS.AFFECTED🚶 and OUTAGE.DURATION⏱ was only made possible by dropping rows with missing values from the dataset, but how do we know that dropping those values didn't significantly impact our conclusion? Moreover, if we were to fill in (or impute) these missing values, how would we know *that* wouldn't significantly impact our conclusion?
 
-**We need to assess whether or not data in our CUSTOMERS.AFFECTED column is MAR (Missing at Random) or MCAR (Missing Completely At Random) with respect to OUTAGE.DURATION.**
+**We need to assess whether or not data in our CUSTOMERS.AFFECTED🚶 column is MAR (Missing at Random) or MCAR (Missing Completely At Random) with respect to OUTAGE.DURATION⏱.**
 
-- If our data winds up MCAR, we can be more liberal with how we tackle the data, because "Missing Completely At Random" means tweaking data at random **won't significantly change our distribution of OUTAGE.DURATION data.**
+- If our data winds up MCAR, we can be more liberal with how we tackle the data, because "Missing Completely At Random" means tweaking data at random **won't significantly change our distribution of OUTAGE.DURATION⏱ data.**
 
-- If our data winds up MAR, we have to be more careful with how we tackle the data, because "Missing At Random" means tweaking data at random ***might* significantly change our distribution of OUTAGE.DURATION data.**
+- If our data winds up MAR, we have to be more careful with how we tackle the data, because "Missing At Random" means tweaking data at random ***might* significantly change our distribution of OUTAGE.DURATION⏱ data.**
 
-Here's a diagram of two distributions, one of OUTAGE.DURATION but only when CUSTOMERS.AFFECTED **has missing data**, and another of OUTAGE.DURATION but only when CUSTOMERS.AFFECTED **has present data**:
+Here's a diagram of two distributions, one of OUTAGE.DURATION⏱ but only when CUSTOMERS.AFFECTED🚶 **has missing data**, and another of OUTAGE.DURATION⏱ but only when CUSTOMERS.AFFECTED🚶 **has present data**:
 
 [DIST1]
 [DIST2]
 
 <br>
-All things considered, the distributions have roughly the same shape; both of them are **right-skewed and *lot* of data is packed into that first bar.** This implies that our OUTAGE.DURATION data is of the same distribution regardless of whether or not CUSTOMERS.AFFECTED is absent, meaning **our data is probably MCAR.** But looks can be deceiving, so we more formally decided to run a permutation test and see what results lie waiting.
 
-<br>
-[PERMTEST]
+All things considered, the distributions have roughly the same shape; both of them are **right-skewed and lot of data is packed into that first bar.** This implies that our OUTAGE.DURATION⏱ data is of the same distribution regardless of whether or not CUSTOMERS.AFFECTED🚶 is absent, meaning *our data is probably MCAR.* But looks can be deceiving, so we more formally decided to run a permutation test and see what results lie waiting.
 
-Surprisingly, the p-value we recieved from running this test was ~0.02, which (at a standard α = 0.05 significance level) **implies significant difference in the missing and non-missing distributions, or MAR dependence.**
+- <b> NULL HYPOTHESIS: </b> The distribution of OUTAGE.DURATION⏱ when CUSTOMERS.AFFECTED🚶 is missing **is the same** as the distribution of OUTAGE.DURATION⏱ when CUSTOMERS.AFFECTED🚶 is not missing.
+
+- <b> ALT HYPOTHESIS: </b> The distribution of OUTAGE.DURATION⏱ when CUSTOMERS.AFFECTED🚶 is missing **is the NOT same** as the distribution of OUTAGE.DURATION⏱ when CUSTOMERS.AFFECTED🚶 is not missing.
+
+- *Test Statistic: the proportion of long power outages* 
+
+[PERMTEST1]
+
+Surprisingly, the p-value we recieved from running this test was ~0.02, which (at a standard α = 0.05 significance level) **rejects the null hypothesis and implies significant difference in the missing and non-missing distributions, or MAR dependence.**
 
 It's a good thing we checked! It turns out we need to be more careful with our data.
+
+---
+
+However, as demonstrated above, the missingness of a column **might not depend on another column.** 
+
+<b>Remember that NMAR column: CAUSE.CATEGORY.DETAIL🌪️?</b> 
+
+In conjunction with data from OUTAGE.DURATION⏱, we conducted a permutation test to determine whether the missingness of CAUSE.CATEGORY.DETAIL (which contains 471 missing values) depends on OUTAGE.DURATION⏱. Note that for this permutation test, we removed rows for which OUTAGE.DURATION⏱ (the independent variable) had missing values.
+
+- <b>Null Hypothesis: </b> The missingness of CAUSE.CATEGORY.DETAIL🌪️ **does not depend** on OUTAGE.DURATION⏱.
+- <b>Alternative Hypothesis: </b>The missingness of CAUSE.CATEGORY.DETAIL🌪️ **does depend** on OUTAGE.DURATION⏱.
+
+- *Test statistic: the absolute mean difference in OUTAGE.DURATION⏱ for rows in which CAUSE.CATEGORY.DETAIL was missing and rows in which CAUSE.CATEGORY.DETAIL is not missing.*
+
+[PERMTEST2]
+
+We recieved a p-value of ~0.08 for this comparison, which (at a standard α = 0.05 significance level) **fails to reject the null hypothesis and implies that CAUSE.CATEGORY.DETAIL🌪️ is not dependent on OUTAGE.DURATION⏱. In other words, CAUSE.CATEGORY.DETAIL is MCAR with respect to OUTAGE.DURATION⏱.** 
+
 
 
 
 ## HYPOTHESIS TESTING 🔋
 
-In our hypothesis test, we investigated whether each of the fifty states had longer power outages (duration) compared to the average power outage duration of the greater United States. We defined long power outages as power outages that were greater than the national average duration. Thus, in order to simulate our null hypothesis, we created a boolean column of True’s for longer than the average duration and False for not longer than the average duration for each observation. Thus, our hypotheses were as follows:
-Null Hypothesis: The state’s proportion of long power outages is equal to proportion of long power outages of the greater United States
-Alternative Hypothesis: the state’s proportion of of long power outages is greater than the proportion of long power outages of the greater United States
-Test Statistic: the proportion of long power outages 
-Significance Level: 0.05
+With our data assessed and undestood, it was time to use OUTAGE.DURATION⏱ to address our big question:
 
-These choices of hypothesis fit our overall question wherein we are trying to determine which states have more longer than average power outages. With this test, we hope to perhaps find regional patterns of where long power outages may occur. 
+> ## Every state has power outages from time to time, but which states' outages appear to be unusually long?
+
+In our hypothesis tests, we investigated whether each of the fifty states had **longer power outages (duration) compared to the average power outage duration of the greater United States.** We defined long power outages as power outages that were greater than the national average duration. Thus, in order to simulate our null hypothesis, we created a boolean column of ***Trues*** for longer than the average duration and ***Falses*** for not longer than the average duration for each observation. 
+
+Our hypotheses for each of the 49 tests (Alaska had no data) were as follows:
+
+- <b>Null Hypothesis: </b> The state’s proportion of long power outages **is equal to** proportion of long power outages of the greater United States
+
+- <b>Alternative Hypothesis: </b> the state’s proportion of of long power outages **is greater than** the proportion of long power outages of the greater United States
+
+- *Test Statistic: the proportion of long power outages* 
+
+These choices of hypothesis fit our overall question wherein we are trying to determine which states **more commonly have longer-than-average power outages.** With this test, we hoped to find regional patterns of where long power outages may occur (perhaps even coinciding with our choropleth of average CUSTOMERS.AFFECTED🚶 per state from earlier on).
  
-P-Value: Since we conducted the hypothesis test for each state, we have 50 p-values: one for each state indicating the probability of seeing such an observed proportion of long power outages if the null hypothesis was indeed true. We have stored our p-values in the following DataFrame:
+Since we conducted the hypothesis test for each state, we have 50 p-values: one for each state indicating the probability of seeing such an observed proportion of long power outages if the null hypothesis was indeed true. <b>We have stored our p-values in the following DataFrame:</b>
 
+[STATEDF1]
 
-Looking at each p-value, we can fail to reject the null hypothesis for a majority of the states (46 total states) as they all have p-values greater than 0.05. However, for 4 states, we can reject the null hypothesis at the 5% significance level and conclude that Pennsylvania, Michigan, New York, and New Jersey do not have a proportion of long power outages equal to the greater United States. It’s interesting to note that all of these states are located in the Northeast and Midwest (for Michigan), perhaps suggesting there are regional factors at play impacting power outage duration. Moreover, it is also interesting to note that Wisconsin did not appear on this list despite having the greatest mean power outage duration overall. 
-However, it is important to note that with such multiple testing without corrections, there is an increased risk of committing a Type 1 error wherein we reject the null hypothesis when it is actually true. 
+Looking at each p-value, **we can fail to reject the null hypothesis for a majority of the states (46 total states) as they all have p-values greater than 0.05.**
+
+**However, for 4 states, we can reject the null hypothesis at the 5% significance level and conclude that Pennsylvania, Michigan, New York, and New Jersey have a larger proportion of long power outages equal to the greater United States.**
+
+[STATEDF2]
+
+It’s interesting to note that all of these states are located in the Northeast and Midwest (for Michigan), perhaps suggesting there are regional factors at play impacting power outage duration. Moreover, it is also interesting to note that Wisconsin did not appear on this list despite having the greatest mean power outage duration overall. 
+
+<b>It is also important to note that with such multiple testing without corrections, there is an increased risk of committing a Type 1 error wherein we reject the null hypothesis when it is actually true. </b>
+
+---
+
+So, we have gathered that:
+
+- Outage data has many factors and causes🌪️ that make it complex to predict, and investigating that data as individual points or as aggregates can reveal contrasting trends.
+
+-  Four states deviate from what is expected of the distribution of the greater United States in terms of OUTAGE.DURATION⏱.
+
+- There is some overlap in the states that more commonly have longer power outages and the states who have a high number of mean CUSTOMERS.AFFECTED🚶 per outage.
+
+... each of which is a quite *illuminating conclusion.*
+
+<br>
+
+> ## "Sometimes the best lighting of all is a power failure." - Douglas Coupland. 💡
 
