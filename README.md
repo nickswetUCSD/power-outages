@@ -12,11 +12,11 @@ Power outages in the United States are a prime example of a common occurance tha
 
 
 
-And of thanks to all of these variables, no two outages will ever quite be the same. 
+And thanks to all of these variables, no two outages will ever quite be the same. 
 
 ---
 
-But just because every outage is different, it doesn't mean we can't find common threads or patterns that tell us valuable information about such a trend.
+But just because every outage is different, it doesn't mean we can't find common threads or patterns that tell us valuable information about such a trend. Such information is important for people to know. People in states who may be more prone to more frequent or longer power outages should be aware of the fact and prepare accordingly by stocking food/water, having a generator, ... etc.
 
 Thanks to **Purdue University's LASCI (Laboratory For Advancing Sustainable Critical Infrastructure)**,¹ we have access to **1534 rows** of power outage data that contain valuable column information² like:
 
@@ -27,7 +27,7 @@ Thanks to **Purdue University's LASCI (Laboratory For Advancing Sustainable Crit
 <br />
 
 - **CAUSE.CATEGORY.DETAIL**🌪️:
->"Represents the postal code of the U.S. states." Interesting metric to track and aggregate.
+>"Detailed description of the event categories causing the major power outages." Interesting metric to track and aggregate.
 <br />
 
 - **CUSTOMERS.AFFECTED**🚶:
@@ -442,9 +442,13 @@ We used plotly.express.choropleth to get an idea of the **geographical distribut
 
 <iframe src="assets/choroduration.html" width=800 height=600 frameBorder=0></iframe>
 
+In this choropleth of mean outage duration, it seems Wisconsin has the greatest mean outage duration while the central United States as the lowest mean outage duration 
+
 Perhaps there was a causal explanation for the distribution here, but we couldn't say for certain. Regardless, it gave us an inkling that perhaps we should see **how CUSTOMERS.AFFECTED🚶 was spread geographically and see if there was similarity**, since more densely-populated areas tend to have more people that necessitate electricity as a utility.
 
-<iframe src="assets/chorocustomers.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/chorocustomers.html" width=900 height=600 frameBorder=0></iframe>
+
+In this choropleth of mean customers affected, it seems Florida has the greatest mean customers affected. This could be due to the greater population of these states.
 
 And sure enough, it seemed as though similar regions (such as New York or California) were decently dense with dissatisfied customers. Now it was time to compare them against each other.
 
@@ -1023,7 +1027,7 @@ Data can be absent from a dataset for many reasons. Sometimes it's intentional, 
 
 NMAR (or not Not Missing At Random) is a type of missingness characterized by data in a column being missing because of the value of the missing data itself. 
 
-For example: If you get a bunch of missing values after administering a self-reported survey with the sole question "Rate your happiness on a scale of 1 to 10", it's probably the twos and threes that are missing from your dataset, because less happy individuals are more inclined to be embarassed to report anything at all. Since the data that's missing is dependent on if that number is low, the missingness in the data here is NMAR.
+For example: If you get a bunch of missing values after administering a self-reported survey with the sole question "Rate your happiness on a scale of 1 to 10", it's probably the twos and threes that are missing from your dataset, because less happy individuals are more inclined to be too embarassed to report anything at all. Since the data that's missing is dependent on if that number is low, the missingness in the data here is NMAR.
 
 In our power outage data, we could consider missing values in the CAUSE.CATEGORY.DETAIL🌪️ column as NMAR. The purpose of CAUSE.CATEGORY.DETAIL🌪️ is to supply extra information about the cause of an outage if necessary. It's likely the case that information was left missing from the column if that extra information was not considered relevant or necessary. 
 
@@ -1077,6 +1081,7 @@ However, as demonstrated above, the missingness of a column **might not depend o
 In conjunction with data from OUTAGE.DURATION⏱, we conducted a permutation test to determine whether the missingness of CAUSE.CATEGORY.DETAIL (which contains 471 missing values) depends on OUTAGE.DURATION⏱. Note that for this permutation test, we removed rows for which OUTAGE.DURATION⏱ (the independent variable) had missing values.
 
 - <b>Null Hypothesis: </b> The missingness of CAUSE.CATEGORY.DETAIL🌪️ **does not depend** on OUTAGE.DURATION⏱.
+
 - <b>Alternative Hypothesis: </b>The missingness of CAUSE.CATEGORY.DETAIL🌪️ **does depend** on OUTAGE.DURATION⏱.
 
 - *Test statistic: the absolute mean difference in OUTAGE.DURATION⏱ for rows in which CAUSE.CATEGORY.DETAIL🌪️ was missing and rows in which CAUSE.CATEGORY.DETAIL🌪️ is not missing.*
@@ -1471,7 +1476,7 @@ Since we conducted the hypothesis test for each state, we have 49 p-values: one 
 
 Looking at each p-value, **we can fail to reject the null hypothesis for a majority of the states (46 total states) as they all have p-values greater than 0.05.**
 
-**However, for 4 states, we can reject the null hypothesis at the 5% significance level and conclude that Pennsylvania, Michigan, New York, and New Jersey have a larger proportion of long power outages equal to the greater United States.**
+**However, for 4 states, we can reject the null hypothesis at the 5% significance level and conclude that Pennsylvania, Michigan, New York, and New Jersey do not have a proportion of long power outages equal to that of the greater United States.**
 
 <table border="1" class="dataframe">
   <thead>
@@ -1517,7 +1522,7 @@ Looking at each p-value, **we can fail to reject the null hypothesis for a major
 
 It’s interesting to note that all of these states are located in the Northeast and Midwest (for Michigan), perhaps suggesting there are regional factors at play impacting power outage duration. All of these are fairly high on our mean CUSTOMERS.AFFECTED🚶 plot, suggesting there is overlap in these two areas. 
 
-<iframe src="assets/chorocustomers.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/chorocustomers.html" width=900 height=600 frameBorder=0></iframe>
 
 Moreover, it is also interesting to note that Wisconsin did not appear on this list despite having the greatest mean power outage duration overall. This may be because while Wisconsin has the greatest mean outage duration, its proportion of long durations is actually on par with the proportion of long outages nationwide. However, Wisconsin’s long outages — when they do occur — may be longer compared to the other states.
 
