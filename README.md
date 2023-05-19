@@ -53,7 +53,7 @@ The key word here is "unusually." Sure, an outage may be long from time to time,
 
 We started our cleaning off by converting the default excel data file to a CSV file so that we could access and visualize the data through Python Pandas, and after some slight reformatting we had a properly-indexed DataFrame to work with.
 
-[CLEAN1]
+<iframe src="assets/clean1.html" width=800 height=600 frameBorder=0></iframe>
 
 We proceeded by creating two new columns through merging old unnecessary ones:
 <br />
@@ -64,7 +64,7 @@ We proceeded by creating two new columns through merging old unnecessary ones:
 - **OUTAGE.RESTORATION:**
 >Was the column merging of "OUTAGE.RESTORATION.DATE" and "OUTAGE.RESTORATION.TIME" into a single pd.Timestamp column.
 
-[CLEAN2]
+<iframe src="assets/clean2.html" width=800 height=600 frameBorder=0></iframe>
 
 These steps made our analysis a lot easier to work with, and a lot more "date-centric". We could focus more on OUTAGE.DURATION⏱ and the start and endpoints of our outages instead of getting confused among five different columns relating to time, so things naturally became more efficient. The resulting dataframe looked something like this.
 
@@ -441,11 +441,11 @@ These steps made our analysis a lot easier to work with, and a lot more "date-ce
 
 We used plotly.express.choropleth to get an idea of the **geographical distribution of our OUTAGE.DURATION⏱ data.** We mapped out the mean durations of power outages onto their respective states and noticed that **higher means were typically distributed among more populated/urbanized areas.**
 
-[CHORODURATION]
+<iframe src="assets/choroduration.html" width=800 height=600 frameBorder=0></iframe>
 
 Perhaps there was a causal explanation for the distribution here, but we couldn't say for certain. Regardless, it gave us an inkling that perhaps we should see **how CUSTOMERS.AFFECTED🚶 was spread geographically and see if there was similarity**, since more densely-populated areas tend to have more people that necessitate electricity as a utility.
 
-[CHOROCUSTOMERS]
+<iframe src="assets/chorocustomers.html" width=800 height=600 frameBorder=0></iframe>
 
 And sure enough, it seemed as though similar regions (such as New York or California) were decently dense with dissatisfied customers. Now it was time to compare them against each other.
 
@@ -456,7 +456,7 @@ And sure enough, it seemed as though similar regions (such as New York or Califo
 
 To start, we took the raw data from CUSTOMERS.AFFECTED🚶 and plotted it against OUTAGE.DURATION⏱ as a scatterplot.
 
-[INDIVIDUALSCATTER]
+<iframe src="assets/individualscatter.html" width=800 height=600 frameBorder=0></iframe>
 
 Oh... that doesn't look that good.
 
@@ -464,7 +464,7 @@ Not only was the relationship relatively non-linear, but there were clearly outl
 
 However, when we stratified our data by state and **plotted the means per state instead, we reached a strange conclusion.**
 
-[MEANSCATTER]
+<iframe src="assets/meanscatter.html" width=800 height=600 frameBorder=0></iframe>
 
 Now there was a *much* more clear positive linear trend. Why do these two plots show opposite conclusions? We can chalk a lot of it up to **Simpson's Paradox: where data on the individual level tells a different story on a grouped level.**
 
@@ -1048,8 +1048,9 @@ Our last comparison of CUSTOMERS.AFFECTED🚶 and OUTAGE.DURATION⏱ was only ma
 
 Here's a diagram of two distributions, one of OUTAGE.DURATION⏱ but only when CUSTOMERS.AFFECTED🚶 **has missing data**, and another of OUTAGE.DURATION⏱ but only when CUSTOMERS.AFFECTED🚶 **has present data**:
 
-[DIST1]
-[DIST2]
+<iframe src="assets/dist1.html" width=800 height=600 frameBorder=0></iframe>
+
+<iframe src="assets/dist2.html" width=800 height=600 frameBorder=0></iframe>
 
 <br>
 
@@ -1509,7 +1510,7 @@ Looking at each p-value, **we can fail to reject the null hypothesis for a major
 
 It’s interesting to note that all of these states are located in the Northeast and Midwest (for Michigan), perhaps suggesting there are regional factors at play impacting power outage duration. All of these are fairly high on our mean CUSTOMERS.AFFECTED🚶 plot, suggesting there is overlap in these two areas. 
 
-[CHOROCUSTOMERS]
+<iframe src="assets/chorocustomers.html" width=800 height=600 frameBorder=0></iframe>
 
 Moreover, it is also interesting to note that Wisconsin did not appear on this list despite having the greatest mean power outage duration overall. 
 
